@@ -38,8 +38,8 @@ public class ApplicationBasicInfoToApiModel implements Function<ApplicationBasic
                 .name(applicationBasicInfo.getApplicationName())
                 .description(applicationBasicInfo.getDescription())
                 .accessUrl(Optional.ofNullable(applicationBasicInfo.getAccessUrl()).isPresent() ? URI.create
-                        (applicationBasicInfo.getAccessUrl()) : null)
+                        (applicationBasicInfo.getAccessUrl().trim()) : null)
                 .image(Optional.ofNullable(applicationBasicInfo.getImageUrl()).isPresent() ? URI.create
-                        (applicationBasicInfo.getImageUrl()) : null);
+                        (applicationBasicInfo.getImageUrl().trim()) : null);
     }
 }
