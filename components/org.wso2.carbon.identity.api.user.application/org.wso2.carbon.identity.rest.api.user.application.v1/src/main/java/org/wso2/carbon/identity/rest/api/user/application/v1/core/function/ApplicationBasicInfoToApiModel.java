@@ -18,11 +18,11 @@
 
 package org.wso2.carbon.identity.rest.api.user.application.v1.core.function;
 
+import org.apache.commons.lang.StringUtils;
 import org.wso2.carbon.identity.application.common.model.ApplicationBasicInfo;
 import org.wso2.carbon.identity.rest.api.user.application.v1.model.ApplicationResponse;
 
 import java.net.URI;
-import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -37,9 +37,9 @@ public class ApplicationBasicInfoToApiModel implements Function<ApplicationBasic
                 .id(String.valueOf(applicationBasicInfo.getApplicationResourceId()))
                 .name(applicationBasicInfo.getApplicationName())
                 .description(applicationBasicInfo.getDescription())
-                .accessUrl(Optional.ofNullable(applicationBasicInfo.getAccessUrl()).isPresent() ? URI.create
-                        (applicationBasicInfo.getAccessUrl()) : null)
-                .image(Optional.ofNullable(applicationBasicInfo.getImageUrl()).isPresent() ? URI.create
-                        (applicationBasicInfo.getImageUrl()) : null);
+                .accessUrl(StringUtils.isNotBlank(applicationBasicInfo.getAccessUrl()) ? URI.create
+                        (applicationBasicInfo.getAccessUrl().trim()) : null)
+                .image(StringUtils.isNotBlank(applicationBasicInfo.getImageUrl()) ? URI.create
+                        (applicationBasicInfo.getImageUrl().trim()) : null);
     }
 }
