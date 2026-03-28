@@ -26,7 +26,10 @@ import org.wso2.carbon.identity.rest.api.user.approval.v2.core.factories.Approva
 import org.wso2.carbon.identity.rest.api.user.approval.v2.model.StateDTO;
 import org.wso2.carbon.identity.workflow.engine.ApprovalTaskService;
 import org.wso2.carbon.identity.workflow.engine.dto.ApprovalTaskDTO;
+import org.wso2.carbon.identity.workflow.engine.dto.ApprovalTaskFilterDTO;
+import org.wso2.carbon.identity.workflow.engine.dto.FilterCondition;
 import org.wso2.carbon.identity.workflow.engine.exception.WorkflowEngineException;
+import org.wso2.carbon.identity.workflow.engine.util.FilterParser;
 
 import java.util.List;
 
@@ -64,10 +67,17 @@ public class MeApiServiceImpl implements MeApiService {
     }
 
     @Override
-    public Response listApprovalTasksForLoggedInUser(Integer limit, Integer offset, List<String> status) {
+    public Response listApprovalTasksForLoggedInUser(Integer limit, Integer offset, List<String> status,
+                                                     String filter, List<String> operationType) {
 
         try {
-            return Response.ok().entity(approvalEventService.listApprovalTasks(limit, offset, status)).build();
+            ApprovalTaskFilterDTO approvalTaskFilterDTO = new ApprovalTaskFilterDTO();
+            approvalTaskFilterDTO.setStatusList(status);
+            approvalTaskFilterDTO.setOperationTypeList(operationType);
+            List<FilterCondition> conditions = FilterParser.parse(filter);
+            approvalTaskFilterDTO.setFilterConditions(conditions);
+            return Response.ok().entity(approvalEventService.listApprovalTasks(limit, offset, approvalTaskFilterDTO))
+                    .build();
         } catch (WorkflowEngineException e) {
             throw handleError(e);
         }

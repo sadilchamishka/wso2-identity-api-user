@@ -37,6 +37,8 @@ paths:
         - $ref: '#/components/parameters/limitQueryParam'
         - $ref: '#/components/parameters/offsetQueryParam'
         - $ref: '#/components/parameters/statusQueryParam'
+        - $ref: '#/components/parameters/operationTypeQueryParam'
+        - $ref: '#/components/parameters/filterQueryParam'
       responses:
         "200":
           description: Array of approval tasks matching the search criteria
@@ -349,6 +351,31 @@ components:
         minimum: 0
         type: integer
         format: int32
+    filterQueryParam:
+      name: filter
+      in: query
+      description: |
+        Filter condition to narrow down approval tasks. Supported filter attributes and operators:
+        Filter attributes:
+          * workflowId
+          * workflowRequestId
+        Operators:
+          * `eq` - Exact match (equals).
+          * `sw` - Starts with the given value.
+      schema:
+        type: string
+        example: "workflowRequestId eq 14aff6b8-f18a-4597-848e-1f320ad3b8cf"
+    operationTypeQueryParam:
+      name: operationType
+      in: query
+      description: |
+        Filter approval tasks by operation type.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
     statusQueryParam:
       name: status
       in: query

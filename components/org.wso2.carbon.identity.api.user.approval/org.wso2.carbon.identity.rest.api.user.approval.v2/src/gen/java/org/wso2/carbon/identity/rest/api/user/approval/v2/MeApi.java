@@ -40,10 +40,9 @@ public class MeApi  {
 
     private final MeApiService delegate;
 
-    public MeApi(){
+    public MeApi() {
 
         this.delegate = MeApiServiceFactory.getMeApi();
-
     }
 
     @Valid
@@ -89,9 +88,9 @@ public class MeApi  {
         @ApiResponse(code = 403, message = "Resource Forbidden", response = Void.class),
         @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
     })
-    public Response listApprovalTasksForLoggedInUser(    @Valid @Min(0)@ApiParam(value = "Maximum number of records to return")  @QueryParam("limit") Integer limit,     @Valid @Min(0)@ApiParam(value = "Number of records to skip for pagination")  @QueryParam("offset") Integer offset,     @Valid@ApiParam(value = "Approval task's status to filter tasks by their status:  * **RESERVED** - Tasks that are **assigned to** the authenticated user.  * **READY** - Tasks that **can be assigned to** and **can be approved by** the authenticated user.  * **COMPLETED** - Tasks that are **completed by** the user  * \\<empty\\> - **All** the viewable tasks will be retrieved if this parameter is not specified. ")  @QueryParam("status") List<String> status) {
+    public Response listApprovalTasksForLoggedInUser(    @Valid @Min(0)@ApiParam(value = "Maximum number of records to return")  @QueryParam("limit") Integer limit,     @Valid @Min(0)@ApiParam(value = "Number of records to skip for pagination")  @QueryParam("offset") Integer offset,     @Valid@ApiParam(value = "Approval task's status to filter tasks by their status:  * **RESERVED** - Tasks that are **assigned to** the authenticated user.  * **READY** - Tasks that **can be assigned to** and **can be approved by** the authenticated user.  * **COMPLETED** - Tasks that are **completed by** the user  * \\<empty\\> - **All** the viewable tasks will be retrieved if this parameter is not specified. ")  @QueryParam("status") List<String> status,     @Valid@ApiParam(value = "Filter condition to narrow down approval tasks.")  @QueryParam("filter") String filter,     @Valid@ApiParam(value = "Filter approval tasks by operation type. ")  @QueryParam("operationType") List<String> operationType) {
 
-        return delegate.listApprovalTasksForLoggedInUser(limit,  offset,  status );
+        return delegate.listApprovalTasksForLoggedInUser(limit,  offset,  status,  filter,  operationType );
     }
 
     @Valid

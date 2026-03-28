@@ -27,7 +27,7 @@ public interface MeApiService {
 
       public Response getApprovalTaskInfo(String taskId);
 
-      public Response listApprovalTasksForLoggedInUser(Integer limit, Integer offset, List<String> status);
+      public Response listApprovalTasksForLoggedInUser(Integer limit, Integer offset, List<String> status, String filter, List<String> operationType);
 
       public Response updateStateOfTask(String taskId, StateDTO stateDTO);
 }
